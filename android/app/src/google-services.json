@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "662928174936",
+    "project_id": "fixatease",
+    "storage_bucket": "fixatease.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:662928174936:android:80cb5d35075f88efcdbf2d",
+        "android_client_info": {
+          "package_name": "com.example.fixatease_user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "662928174936-jkphth6r828lj3l0il2eomfpsmoapuje.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHvxceKIo5R5TxgQY9_vUl9-HYJ7HEIOs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "662928174936-jkphth6r828lj3l0il2eomfpsmoapuje.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
