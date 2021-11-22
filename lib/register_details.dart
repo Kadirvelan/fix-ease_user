@@ -1,5 +1,6 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:flutter/material.dart';
 
 class RegisterDetails extends StatefulWidget {
@@ -14,7 +15,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
       CameraPosition(target: LatLng(13.010651, 80.2331943), zoom: 17);
 
   late GoogleMapController _googleMapController;
-  late Position _position;
+  late Future<Position> _position = getUserLocation();
 
   Future<Position> getUserLocation() async {
     bool serviceEnabled;
@@ -52,6 +53,25 @@ class _RegisterDetailsState extends State<RegisterDetails> {
     // continue accessing the position of the device.
     return await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
+  }
+
+  getAddress(Position value) async {
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+      value.latitude,
+      value.longitude,
+    );
+    print(placemarks[0]);
+  }
+
+  @override
+  void initState() {
+    _position.then((value) {
+      print('Map Co-ordinates');
+      print(value.latitude);
+      print(value.longitude);
+      print(value);
+      getAddress(value);
+    });
   }
 
   @override
