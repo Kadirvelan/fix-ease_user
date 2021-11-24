@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:fixatease_user/register_details.dart';
 
 class splash_screen extends StatefulWidget {
   const splash_screen({Key? key}) : super(key: key);
@@ -14,6 +15,8 @@ class splash_screen extends StatefulWidget {
 class _splash_screenState extends State<splash_screen> {
   @override
   Widget build(BuildContext context) {
+    @override
+    void initState() {}
     return Stack(
       children: [
         Container(

@@ -15,7 +15,13 @@ class _RegisterDetailsState extends State<RegisterDetails> {
       CameraPosition(target: LatLng(13.010651, 80.2331943), zoom: 17);
 
   late GoogleMapController _googleMapController;
-  late Future<Position> _position = getUserLocation();
+  late Position? initPos = getPosition();
+  late Marker _userLocation = Marker(
+    markerId: MarkerId("User's Home"),
+    infoWindow: InfoWindow(title: 'Home'),
+    icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+    position: LatLng(13.010651, 80.2331943),
+  );
 
   Future<Position> getUserLocation() async {
     bool serviceEnabled;
@@ -63,15 +69,24 @@ class _RegisterDetailsState extends State<RegisterDetails> {
     print(placemarks[0]);
   }
 
-  @override
-  void initState() {
-    _position.then((value) {
+  getPosition() {
+    getUserLocation().then((value) {
       print('Map Co-ordinates');
-      print(value.latitude);
-      print(value.longitude);
       print(value);
+      setState(() {
+        initPos = value;
+      });
+      initPos = value;
+      print('init Position');
+      print(initPos);
       getAddress(value);
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getPosition();
   }
 
   @override
@@ -82,15 +97,54 @@ class _RegisterDetailsState extends State<RegisterDetails> {
 
   @override
   Widget build(BuildContext context) {
+    void _addMarker(LatLng pos) async {
+      setState(() {
+        _userLocation = Marker(
+          markerId: MarkerId("User's Home"),
+          infoWindow: InfoWindow(title: 'Home'),
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+          position: pos,
+        );
+      });
+    }
+
+    if (initPos == Null) {
+      return const Scaffold(
+        backgroundColor: Colors.white,
+        body: Center(
+          child: CircularProgressIndicator(
+            backgroundColor: Colors.white,
+            value: 5,
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       body: Stack(
-        children: const [
+        children: [
           GoogleMap(
             initialCameraPosition: _initialCameraPosition,
             zoomControlsEnabled: false,
             myLocationButtonEnabled: true,
             myLocationEnabled: true,
+            onMapCreated: (controller) => _googleMapController = controller,
+            markers: {
+              _userLocation,
+            },
+            onLongPress: (argument) {
+              print('long pressed');
+              print(argument);
+              _addMarker(argument);
+            },
           ),
+          BottomSheet(
+              onClosing: () {},
+              builder: (context) {
+                return Container(
+                  child: Text('HI this is suma'),
+                );
+              }),
         ],
       ),
     );
