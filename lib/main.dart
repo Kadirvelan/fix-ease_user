@@ -4,7 +4,7 @@ import 'package:fixatease_user/splash_screen.dart';
 import 'package:flutter/material.dart';
 import '/splash_screen.dart';
 import '/login_screen.dart';
-import 'package:fixatease_user/location_main.dart';
+//import 'package:fixatease_user/location_main.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() {

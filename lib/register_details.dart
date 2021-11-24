@@ -121,6 +121,9 @@ class _RegisterDetailsState extends State<RegisterDetails> {
     }
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Choose location'),
+      ),
       body: Stack(
         children: [
           GoogleMap(
@@ -138,13 +141,13 @@ class _RegisterDetailsState extends State<RegisterDetails> {
               _addMarker(argument);
             },
           ),
-          BottomSheet(
-              onClosing: () {},
-              builder: (context) {
-                return Container(
-                  child: Text('HI this is suma'),
-                );
-              }),
+          Container(
+            color: Colors.white,
+            child: Text(
+              'Hi this is suma',
+              style: TextStyle(fontSize: 20),
+            ),
+          ),
         ],
       ),
     );
