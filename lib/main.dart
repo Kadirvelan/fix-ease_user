@@ -1,5 +1,7 @@
-import 'package:fixatease_user/register_screen.dart';
 import 'package:fixatease_user/register_details.dart';
+import 'package:fixatease_user/register_screen.dart';
+import 'package:fixatease_user/pick_location.dart';
+import 'package:fixatease_user/services/database.dart';
 import 'package:fixatease_user/splash_screen.dart';
 import 'package:flutter/material.dart';
 import '/splash_screen.dart';
@@ -22,10 +24,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        "/": (context) => splash_screen(),
+        "/": (context) => splash_screen(), //Database(),
         "/login": (context) => LoginScreen(),
         "/register": (context) => RegisterScreen(),
-        "/register_details": (context) => RegisterDetails(), //LocationMain()
+        "/pick_location": (context) => PickLocation(),
+        '/register_details': (context) => RegisterDetails(), //LocationMain()
       },
     );
   }

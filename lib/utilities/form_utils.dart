@@ -1,7 +1,10 @@
-import 'package:fixatease_user/register_screen.dart';
+import 'package:fixatease_user/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:fixatease_user/utilities/constants.dart';
 import 'package:fixatease_user/services/auth_helper.dart';
+import 'package:fixatease_user/register_details.dart';
+import 'package:fixatease_user/pick_location.dart';
+import 'package:flutter/services.dart';
 
 Widget buildEmailTF(String label, String hinttext) {
   return Column(
@@ -135,6 +138,17 @@ Widget buildBtn(String btntext, BuildContext context) {
           signUp(context);
         } else if (btntext == 'Login') {
           signIn(context);
+        } else if (btntext == 'Confirm details') {
+          DatabaseMethods().adduserInfoToDB({
+            "UserName": userNameController.text,
+            "Latitude": markerLatLong?.latitude,
+            "Longitude": markerLatLong?.longitude,
+            "Address": addressController.text,
+            "Mobile Number": phoneNumberController.text,
+            "Alternate Mobile Number": altphoneNumberController.text,
+            "Date of Birth": dateofbirth
+          });
+          // Navigator.pushNamed(context, "/register_details");
         }
       },
       style: ElevatedButton.styleFrom(

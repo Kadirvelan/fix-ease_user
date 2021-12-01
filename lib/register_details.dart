@@ -1,7 +1,8 @@
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:geocoding/geocoding.dart';
+import 'package:fixatease_user/utilities/form_utils.dart';
+import 'package:fixatease_user/pick_location.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fixatease_user/utilities/constants.dart';
 
 class RegisterDetails extends StatefulWidget {
   const RegisterDetails({Key? key}) : super(key: key);
@@ -10,145 +11,147 @@ class RegisterDetails extends StatefulWidget {
   _RegisterDetailsState createState() => _RegisterDetailsState();
 }
 
+final TextEditingController phoneNumberController = TextEditingController();
+final TextEditingController altphoneNumberController = TextEditingController();
+final TextEditingController addressController = TextEditingController();
+final TextEditingController userNameController = TextEditingController();
+DateTime dateofbirth = DateTime.now();
+
 class _RegisterDetailsState extends State<RegisterDetails> {
-  static const _initialCameraPosition =
-      CameraPosition(target: LatLng(13.010651, 80.2331943), zoom: 17);
-
-  late GoogleMapController _googleMapController;
-  late Position? initPos = getPosition();
-  late Marker _userLocation = Marker(
-    markerId: MarkerId("User's Home"),
-    infoWindow: InfoWindow(title: 'Home'),
-    icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-    position: LatLng(13.010651, 80.2331943),
-  );
-
-  Future<Position> getUserLocation() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    // Test if location services are enabled.
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      // Location services are not enabled don't continue
-      // accessing the position and request users of the
-      // App to enable the location services.
-      return Future.error('Location services are disabled.');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        // Permissions are denied, next time you could try
-        // requesting permissions again (this is also where
-        // Android's shouldShowRequestPermissionRationale
-        // returned true. According to Android guidelines
-        // your App should show an explanatory UI now.
-        return Future.error('Location permissions are denied');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      // Permissions are denied forever, handle appropriately.
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-
-    // When we reach here, permissions are granted and we can
-    // continue accessing the position of the device.
-    return await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-  }
-
-  getAddress(Position value) async {
-    List<Placemark> placemarks = await placemarkFromCoordinates(
-      value.latitude,
-      value.longitude,
-    );
-    print(placemarks[0]);
-  }
-
-  getPosition() {
-    getUserLocation().then((value) {
-      print('Map Co-ordinates');
-      print(value);
-      setState(() {
-        initPos = value;
-      });
-      initPos = value;
-      print('init Position');
-      print(initPos);
-      getAddress(value);
-    });
-  }
-
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
-    getPosition();
-  }
-
-  @override
-  void dispose() {
-    _googleMapController.dispose();
-    super.dispose();
+    addressController.text = "$markerAddress";
   }
 
   @override
   Widget build(BuildContext context) {
-    void _addMarker(LatLng pos) async {
-      setState(() {
-        _userLocation = Marker(
-          markerId: MarkerId("User's Home"),
-          infoWindow: InfoWindow(title: 'Home'),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-          position: pos,
-        );
-      });
-    }
-
-    if (initPos == Null) {
-      return const Scaffold(
-        backgroundColor: Colors.white,
-        body: Center(
-          child: CircularProgressIndicator(
-            backgroundColor: Colors.white,
-            value: 5,
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                "User Name",
+                style: kLabelStyle,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              buildTextInput(
+                  Icons.person, "Enter User Name", userNameController),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                "Address",
+                style: kLabelStyle,
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                decoration: kBoxDecorationStyle,
+                height: 80.0,
+                child: TextFormField(
+                  cursorHeight: 25.0,
+                  controller: addressController,
+                  minLines:
+                      6, // any number you need (It works as the rows for the textarea)
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  style: kHintTextStyle,
+                  decoration: kTextDecoration(
+                      Icons.add_location_alt_sharp, "Enter your address"),
+                ),
+              ),
+              const SizedBox(
+                height: 20.0,
+              ),
+              const Text(
+                "Mobile Number",
+                style: kLabelStyle,
+              ),
+              const SizedBox(height: 10.0),
+              buildTextInput(Icons.phone, "Enter your mobile number",
+                  phoneNumberController),
+              const SizedBox(
+                height: 10.0,
+              ),
+              const Text(
+                "Alternate Mobile Number",
+                style: kLabelStyle,
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              buildTextInput(Icons.phone, 'Enter Alternate mobile number',
+                  altphoneNumberController),
+              const SizedBox(
+                height: 10.0,
+              ),
+              const Text(
+                "Date of Birth",
+                style: kLabelStyle,
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              Flexible(
+                fit: FlexFit.loose,
+                child: Container(
+                  height: 80,
+                  child: CupertinoDatePicker(
+                    mode: CupertinoDatePickerMode.date,
+                    initialDateTime: DateTime(1995, 1, 1),
+                    onDateTimeChanged: (DateTime newDateTime) {
+                      dateofbirth = newDateTime;
+                    },
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              buildBtn("Confirm details", context),
+            ],
           ),
         ),
-      );
-    }
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Choose location'),
       ),
-      body: Stack(
-        children: [
-          GoogleMap(
-            initialCameraPosition: _initialCameraPosition,
-            zoomControlsEnabled: false,
-            myLocationButtonEnabled: true,
-            myLocationEnabled: true,
-            onMapCreated: (controller) => _googleMapController = controller,
-            markers: {
-              _userLocation,
-            },
-            onLongPress: (argument) {
-              print('long pressed');
-              print(argument);
-              _addMarker(argument);
-            },
-          ),
-          Container(
+    );
+  }
+
+  Container buildTextInput(
+      IconData icon, String hinttext, TextEditingController controller) {
+    return Container(
+      alignment: Alignment.centerLeft,
+      decoration: kBoxDecorationStyle,
+      height: 60.0,
+      child: TextField(
+        keyboardType: TextInputType.phone,
+        controller: controller,
+        onChanged: (value) {
+          print(controller);
+        },
+        style: const TextStyle(
+          color: Colors.white,
+          fontFamily: 'OpenSans',
+        ),
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          contentPadding: const EdgeInsets.only(top: 14.0),
+          prefixIcon: Icon(
+            icon,
             color: Colors.white,
-            child: Text(
-              'Hi this is suma',
-              style: TextStyle(fontSize: 20),
-            ),
           ),
-        ],
+          hintText: hinttext,
+          hintStyle: kHintTextStyle,
+        ),
       ),
     );
   }

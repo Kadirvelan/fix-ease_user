@@ -1,12 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'database.dart ';
 
 FirebaseAuth auth = FirebaseAuth.instance;
 
 String userMail = '';
 String userPass = '';
 String userPassConf = '';
+
+late UserCredential userCredential;
 
 displayDialog(BuildContext context, String text) {
   showDialog(
@@ -21,7 +24,7 @@ signUp(BuildContext context) async {
     print(userPassConf);
     print(userMail);
     try {
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+      userCredential = await auth.createUserWithEmailAndPassword(
           email: userMail, password: userPassConf);
       Navigator.pushNamed(context, '/login');
     } on FirebaseAuthException catch (e) {
@@ -41,10 +44,10 @@ signUp(BuildContext context) async {
 
 signIn(BuildContext context) async {
   try {
-    UserCredential userCredential = await FirebaseAuth.instance
+    userCredential = await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: userMail, password: userPass);
     if (userCredential != null) {
-      await Navigator.pushNamed(context, '/register_details');
+      await Navigator.pushNamed(context, '/pick_location');
     }
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {

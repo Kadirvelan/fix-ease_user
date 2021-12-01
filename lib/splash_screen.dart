@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:fixatease_user/register_details.dart';
+import 'package:fixatease_user/pick_location.dart';
 
 class splash_screen extends StatefulWidget {
   const splash_screen({Key? key}) : super(key: key);
@@ -87,28 +87,29 @@ class _splash_screenState extends State<splash_screen> {
                           ),
                         )),
                     ElevatedButton(
-                        style: ButtonStyle(
-                            padding: MaterialStateProperty.all<EdgeInsets>(
-                                EdgeInsets.fromLTRB(20, 12, 20, 12)),
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.black),
-                            shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                const RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5)),
-                                    side: BorderSide(color: Colors.white)))),
-                        onPressed: () =>
-                            {Navigator.pushNamed(context, '/register')},
-                        child: Text(
-                          "Register",
-                          style: GoogleFonts.roboto(
-                            textStyle: const TextStyle(
-                                color: Colors.white,
-                                letterSpacing: .5,
-                                fontSize: 20.0),
-                          ),
-                        )),
+                      style: ButtonStyle(
+                          padding: MaterialStateProperty.all<EdgeInsets>(
+                              EdgeInsets.fromLTRB(20, 12, 20, 12)),
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.black),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  const RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(5)),
+                                      side: BorderSide(color: Colors.white)))),
+                      onPressed: () =>
+                          {Navigator.pushNamed(context, '/register')},
+                      child: Text(
+                        "Register",
+                        style: GoogleFonts.roboto(
+                          textStyle: const TextStyle(
+                              color: Colors.white,
+                              letterSpacing: .5,
+                              fontSize: 20.0),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
