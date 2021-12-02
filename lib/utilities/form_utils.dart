@@ -148,7 +148,8 @@ Widget buildBtn(String btntext, BuildContext context) {
             "Alternate Mobile Number": altphoneNumberController.text,
             "Date of Birth": dateofbirth
           });
-          // Navigator.pushNamed(context, "/register_details");
+
+          Navigator.pushNamed(context, "/show_workers");
         }
       },
       style: ElevatedButton.styleFrom(

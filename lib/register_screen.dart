@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'utilities/constants.dart';
 import 'utilities/form_utils.dart';
 
@@ -14,6 +15,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white10,
+        title: Hero(
+          tag: 'title',
+          child: Text(
+            'Fix@ease',
+            style: GoogleFonts.cookie(
+              textStyle: const TextStyle(
+                  color: Colors.black, letterSpacing: .5, fontSize: 40.0),
+            ),
+          ),
+        ),
+        leading:
+            Hero(tag: 'logo', child: Image.asset("assets/images/Logo_t.png")),
+      ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(
@@ -51,7 +67,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   physics: const AlwaysScrollableScrollPhysics(),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 40.0,
-                    vertical: 110.0,
+                    vertical: 70.0,
                   ),
                   child: Container(
                     decoration: BoxDecoration(

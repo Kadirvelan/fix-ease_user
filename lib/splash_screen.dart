@@ -35,21 +35,27 @@ class _splash_screenState extends State<splash_screen> {
               const SizedBox(height: 50.0),
               Column(
                 children: [
-                  Image.asset(
-                    'assets/images/Logo_t.png',
-                    height: 60.0,
-                    fit: BoxFit.cover,
+                  Hero(
+                    tag: 'logo',
+                    child: Image.asset(
+                      'assets/images/Logo_t.png',
+                      height: 60.0,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   // const SizedBox(
                   //   height: 15.0,
                   // ),
-                  Text(
-                    'Fix@ease',
-                    style: GoogleFonts.cookie(
-                      textStyle: const TextStyle(
-                          color: Colors.black,
-                          letterSpacing: .5,
-                          fontSize: 70.0),
+                  Hero(
+                    tag: 'title',
+                    child: Text(
+                      'Fix@ease',
+                      style: GoogleFonts.cookie(
+                        textStyle: const TextStyle(
+                            color: Colors.black,
+                            letterSpacing: .5,
+                            fontSize: 70.0),
+                      ),
                     ),
                   ),
                 ],

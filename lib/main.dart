@@ -2,6 +2,7 @@ import 'package:fixatease_user/register_details.dart';
 import 'package:fixatease_user/register_screen.dart';
 import 'package:fixatease_user/pick_location.dart';
 import 'package:fixatease_user/services/database.dart';
+import 'package:fixatease_user/show_workers.dart';
 import 'package:fixatease_user/splash_screen.dart';
 import 'package:flutter/material.dart';
 import '/splash_screen.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         "/register": (context) => RegisterScreen(),
         "/pick_location": (context) => PickLocation(),
         '/register_details': (context) => RegisterDetails(), //LocationMain()
+        '/show_workers': (context) => ShowWorkers(),
       },
     );
   }
