@@ -149,6 +149,11 @@ class _PickLocationState extends State<PickLocation> {
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
           position: pos,
         );
+        if (_googleMapController != null) {
+          _googleMapController.animateCamera(CameraUpdate.newCameraPosition(
+              CameraPosition(
+                  target: LatLng(pos.latitude, pos.longitude), zoom: 17)));
+        }
         getMarkerAddress(pos);
       });
     }

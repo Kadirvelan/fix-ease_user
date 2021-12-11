@@ -133,7 +133,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
       decoration: kBoxDecorationStyle,
       height: 60.0,
       child: TextField(
-        keyboardType: TextInputType.phone,
+        keyboardType: TextInputType.name,
         controller: controller,
         onChanged: (value) {
           print(controller);

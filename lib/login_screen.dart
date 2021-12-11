@@ -11,8 +11,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool _rememberMe = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

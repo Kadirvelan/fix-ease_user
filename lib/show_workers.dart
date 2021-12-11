@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fixatease_user/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:fixatease_user/assets/worker_icons.dart';
 
+import 'get_worker_details.dart';
 import 'models/worker_types.dart';
 
 class ShowWorkers extends StatefulWidget {
@@ -11,6 +14,20 @@ class ShowWorkers extends StatefulWidget {
 }
 
 class _ShowWorkersState extends State<ShowWorkers> {
+  Stream<QuerySnapshot> workerStream = Stream.empty();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getworkerStream();
+    print(DatabaseMethods().getWorkersDetails());
+    super.initState();
+  }
+
+  getworkerStream() async {
+    workerStream = await DatabaseMethods().getWorkersDetails();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -26,9 +43,9 @@ class _ShowWorkersState extends State<ShowWorkers> {
           title: Text('Pick a Service'),
           centerTitle: true,
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
-            Icon(WorkerIcons.electrician_svgrepo_com__1_, size: 350),
+            GetWorkerDetails(),
             Icon(WorkerIcons.carpenter_svgrepo_com, size: 350),
             Icon(WorkerIcons.plumber_svgrepo_com, size: 350),
           ],
@@ -36,4 +53,23 @@ class _ShowWorkersState extends State<ShowWorkers> {
       ),
     );
   }
+
+//    getUsersList() {
+//     return StreamBuilder<QuerySnapshot>(
+//         stream: workerStream,
+//         builder: (context, snapshot) {
+//           if (!snapshot.hasData ||
+//               snapshot.connectionState == ConnectionState.waiting) {
+//             return const Center(
+//               child: CircularProgressIndicator(),
+//             );
+//           }
+//           return ListView(
+//               children: (snapshot.data)!.docs.map((document) {
+//             return Container(
+//               child: Text(document["UserName"]),
+//             );
+//           }).toList());
+//         });
+//   }
 }

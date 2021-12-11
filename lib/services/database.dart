@@ -12,9 +12,15 @@ class DatabaseMethods {
         .doc(user?.email)
         .set(userInfoMap);
   }
+
+  Future<Stream<QuerySnapshot>> getWorkersDetails() async {
+    return FirebaseFirestore.instance
+        .collection("workers")
+        .where("Designation", isEqualTo: "Electrician")
+        .snapshots();
+  }
   //
   // confirmDetails(BuildContext context,Map<String,dynamic> userInfoMap) async {
   //   adduserInfoToDB(userInfoMap);
   // }
-
 }

@@ -26,7 +26,7 @@ signUp(BuildContext context) async {
     try {
       userCredential = await auth.createUserWithEmailAndPassword(
           email: userMail, password: userPassConf);
-      Navigator.pushNamed(context, '/login');
+      Navigator.pushNamed(context, '/pick_location');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -47,7 +47,7 @@ signIn(BuildContext context) async {
     userCredential = await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: userMail, password: userPass);
     if (userCredential != null) {
-      await Navigator.pushNamed(context, '/pick_location');
+      await Navigator.pushNamed(context, '/show_workers');
     }
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {
