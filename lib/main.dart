@@ -10,6 +10,8 @@ import '/login_screen.dart';
 //import 'package:fixatease_user/location_main.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'booking_status.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
@@ -31,6 +33,7 @@ class MyApp extends StatelessWidget {
         "/pick_location": (context) => PickLocation(),
         '/register_details': (context) => RegisterDetails(), //LocationMain()
         '/show_workers': (context) => ShowWorkers(),
+        '/booking_status': (context) => BookingStatus(),
       },
     );
   }

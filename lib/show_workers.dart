@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fixatease_user/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:fixatease_user/assets/worker_icons.dart';
-
 import 'get_worker_details.dart';
 import 'models/worker_types.dart';
 
@@ -34,14 +33,25 @@ class _ShowWorkersState extends State<ShowWorkers> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: false,
-          toolbarHeight: 0,
+          automaticallyImplyLeading: true,
+          toolbarHeight: 30,
           bottom: TabBar(
               tabs: workerTypes
                   .map((e) => Tab(icon: e.workerIcon, text: e.workerTitle))
                   .toList()),
           title: Text('Pick a Service'),
           centerTitle: true,
+        ),
+        drawer: Drawer(
+          elevation: 10,
+          child: ListView(
+            children: <Widget>[
+              ListTile(
+                title: Text("Booking Status"),
+                onTap: () => {Navigator.pushNamed(context, "/booking_status")},
+              ),
+            ],
+          ),
         ),
         body: TabBarView(
           children: [

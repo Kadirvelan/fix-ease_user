@@ -48,6 +48,8 @@ dependencies:
   location: ^4.3.0
   geocoding: ^2.0.1
   cloud_firestore: ^3.1.0
+  flutter_datetime_picker: ^1.5.1
+
 
 
 
