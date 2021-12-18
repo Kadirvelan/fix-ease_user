@@ -4,11 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class GetWorkerDetails extends StatefulWidget {
+  final String designation;
+
+  const GetWorkerDetails({Key? key, required this.designation})
+      : super(key: key);
+
   @override
-  State<GetWorkerDetails> createState() => _GetWorkerDetailsState();
+  State<GetWorkerDetails> createState() =>
+      new _GetWorkerDetailsState(designation);
 }
 
 class _GetWorkerDetailsState extends State<GetWorkerDetails> {
+  String designation;
+  _GetWorkerDetailsState(this.designation);
+
   DateTime selectedDate = DateTime.now();
   // TimeOfDay selectedTime = TimeOfDay.now();
 
@@ -90,62 +99,56 @@ class _GetWorkerDetailsState extends State<GetWorkerDetails> {
           }
           return ListView(
               children: (snapshot.data)!.docs.map((document) {
-            return Container(
-              width: 100,
-              height: 100,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                ),
-                color: Colors.red,
-                elevation: 10,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 10,
+            return Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              color: Colors.red,
+              elevation: 10,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(0.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          document["UserName"],
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          document["Mobile Number"],
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        ElevatedButton(
+                            onPressed: () => {}, child: const Text("Book Now")),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        ElevatedButton(
+                            onPressed: () => _selectDateTime(context, document),
+                            child: const Text("schedule")),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(0.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            document["UserName"],
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            document["Mobile Number"],
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          ElevatedButton(
-                              onPressed: () => {},
-                              child: const Text("Book Now")),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          ElevatedButton(
-                              onPressed: () =>
-                                  _selectDateTime(context, document),
-                              child: const Text("schedule")),
-                        ],
-                      ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Text(document["Address"]),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Text(document["Address"]),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                  )
+                ],
               ),
             );
           }).toList());

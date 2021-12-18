@@ -55,9 +55,15 @@ class _ShowWorkersState extends State<ShowWorkers> {
         ),
         body: TabBarView(
           children: [
-            GetWorkerDetails(),
-            Icon(WorkerIcons.carpenter_svgrepo_com, size: 350),
-            Icon(WorkerIcons.plumber_svgrepo_com, size: 350),
+            GetWorkerDetails(
+              designation: 'Electrician',
+            ),
+            GetWorkerDetails(
+              designation: 'Carpenter',
+            ),
+            GetWorkerDetails(
+              designation: 'Plumber',
+            ),
           ],
         ),
       ),
