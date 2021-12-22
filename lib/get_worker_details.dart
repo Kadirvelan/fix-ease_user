@@ -52,7 +52,7 @@ class _GetWorkerDetailsState extends State<GetWorkerDetails> {
       print(selectedDate);
       DatabaseMethods().bookWorker({
         "WorkerMail": document.id,
-        "UserMail": user?.email,
+        "UserMail": DatabaseMethods().user?.email,
         "StartTime": selectedDate,
         "EndTime": endDate,
         "Status": 'Active',

@@ -4,10 +4,11 @@ import 'package:fixatease_user/services/auth_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-User? user = auth.currentUser;
+
 final FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
 
 class DatabaseMethods {
+  User? user = auth.currentUser;
   Future adduserInfoToDB(Map<String, dynamic> userInfoMap) async {
     return firestoreInstance
         .collection("users")
