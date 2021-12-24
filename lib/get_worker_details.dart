@@ -11,7 +11,7 @@ class GetWorkerDetails extends StatefulWidget {
 
   @override
   State<GetWorkerDetails> createState() =>
-      new _GetWorkerDetailsState(designation);
+       _GetWorkerDetailsState(designation);
 }
 
 class _GetWorkerDetailsState extends State<GetWorkerDetails> {
@@ -37,7 +37,7 @@ class _GetWorkerDetailsState extends State<GetWorkerDetails> {
   // }
 
   Future<void> _selectDateTime(
-      BuildContext context, QueryDocumentSnapshot<Object?> document) async {
+      BuildContext context, DocumentSnapshot<Map<String, dynamic>> document) async {
     final DateTime? picked = await DatePicker.showDateTimePicker(context,
         showTitleActions: true,
         minTime: DateTime.now(),
@@ -72,85 +72,88 @@ class _GetWorkerDetailsState extends State<GetWorkerDetails> {
     // });
   }
 
-  Stream<QuerySnapshot> workerStream = Stream.empty();
+ Stream<List<DocumentSnapshot<Map<String, dynamic>>>> workerStream = Stream.empty();
 
   getWorkerDetails() async {
-    workerStream = await DatabaseMethods().getWorkersDetails();
+    workerStream = await DatabaseMethods().getWorkerDetailsByLocation(designation);
     setState(() {});
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getWorkerDetails();
   }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
+    return StreamBuilder<List<DocumentSnapshot<Map<String, dynamic>>>>(
         stream: workerStream,
         builder: (context, snapshot) {
-          if (!snapshot.hasData ||
-              snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
+          print(snapshot.data);
+          print(workerStream.first);
+          if (!snapshot.hasData) {
+            return Center(
               child: CircularProgressIndicator(),
             );
           }
           return ListView(
-              children: (snapshot.data)!.docs.map((document) {
-            return Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              color: Colors.red,
-              elevation: 10,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(0.0),
-                    child: Row(
-                      children: [
-                        Text(
-                          document["UserName"],
-                          style: const TextStyle(fontSize: 20),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          document["Mobile Number"],
-                          style: const TextStyle(fontSize: 20),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        ElevatedButton(
-                            onPressed: () => {}, child: const Text("Book Now")),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        ElevatedButton(
-                            onPressed: () => _selectDateTime(context, document),
-                            child: const Text("schedule")),
-                      ],
+              children: (snapshot.data)!.map((document) {
+                print(snapshot.data);
+            return
+               Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                color: Colors.red,
+                elevation: 10,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 10,
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Text(document["Address"]),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.all(0.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            document["UserName"],
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            document["Mobile Number"],
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          ElevatedButton(
+                              onPressed: () => {}, child: const Text("Book Now")),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          ElevatedButton(
+                              onPressed: () => _selectDateTime(context, document),
+                              child: const Text("schedule")),
+                        ],
+                      ),
                     ),
-                  )
-                ],
-              ),
-            );
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Flexible(child: Text(document["Address"])),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              );
+
           }).toList());
         });
   }

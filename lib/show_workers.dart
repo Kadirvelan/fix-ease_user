@@ -13,19 +13,15 @@ class ShowWorkers extends StatefulWidget {
 }
 
 class _ShowWorkersState extends State<ShowWorkers> {
-  Stream<QuerySnapshot> workerStream = Stream.empty();
+  Stream<List<DocumentSnapshot<Map<String, dynamic>>>> workerStream = Stream.empty();
 
   @override
   void initState() {
     // TODO: implement initState
-    getworkerStream();
-    print(DatabaseMethods().getWorkersDetails());
     super.initState();
   }
 
-  getworkerStream() async {
-    workerStream = await DatabaseMethods().getWorkersDetails();
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +49,7 @@ class _ShowWorkersState extends State<ShowWorkers> {
             ],
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
             GetWorkerDetails(
               designation: 'Electrician',
